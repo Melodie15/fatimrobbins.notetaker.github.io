@@ -85,6 +85,13 @@ const handleNoteView = function () {
   renderActiveNote();
 };
 
+//Allow user to add new note 
+const handleNewNoteView = function() {
+  activeNote = {};
+  renderActiveNote();
+}
+
+
 // Show saved button when there's data
 const handleRenderSaveBtn = function () {
   if (!$noteTitle.val().trim() || !$noteText.val().trim()) {
@@ -100,12 +107,17 @@ const renderNoteList = (notes) => {
 
   const noteListItems = [];
 
+  for (var i = 0; i < notes.lenght; i++) {
+    var note = notes[i];
+  }
+
   // Returns jquery object for li with given text and delete button
   const create$li = (text, withDeleteButton = true) => {
-    const $li = $("<li class='list-group-item'>");
-    const $span = $("<span>").text(text);
-    $li.append($span);
+    const $li = $("<li class='list-group-item'>").data(note);
+    const $span = $("<span>").text(note.title);
 
+    $li.append($span);
+ 
     if (withDeleteButton) {
       const $delBtn = $(
         "<i class='fas fa-trash-alt float-right text-danger delete-note'>"

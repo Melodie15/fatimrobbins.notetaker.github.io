@@ -1,10 +1,10 @@
-const { json } = require("body-parser");
 const fs = require("fs");
 const util = require("util");
 const writeFileSync = util.promisify(fs.writeFile);
 var noteContents = require("../db/noteContents");
 
 module.exports = function(app) {
+
     app.get("/api/notes", function(req, res) {
         res.json(noteContents);
     });
@@ -12,10 +12,10 @@ module.exports = function(app) {
     app.post("/api/notes", function(req, res) {
 
         let newNote = req.body;
-        let uniqueId = (data.lenght).toString();
+        let uniqueId = (noteContents.lenght).toString();
         console.log(uniqueId);
         newNote.id = uniqueId;
-        data.push(newNote);
+        noteContents.push(newNote);
 
         writeFileSync("./db/noteContents.json", JSON.stringify(noteContents), function(err) {
             if (err) throw (err);
