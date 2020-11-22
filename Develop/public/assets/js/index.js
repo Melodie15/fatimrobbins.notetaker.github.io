@@ -85,12 +85,6 @@ const handleNoteView = function () {
   renderActiveNote();
 };
 
-// Enter new note
-const handleNewNoteView = function () {
-  activeNote = {};
-  renderActiveNote();
-};
-
 // Show saved button when there's data
 const handleRenderSaveBtn = function () {
   if (!$noteTitle.val().trim() || !$noteText.val().trim()) {

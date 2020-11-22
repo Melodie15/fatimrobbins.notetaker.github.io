@@ -1,7 +1,6 @@
 //Dependencies
 var express = require("express") ;
 var path = require("path");
-var fs = require("fs");
 
 
 //Sets up the Express App
@@ -16,6 +15,7 @@ app.use(express.static(path.join(__dirname, "Develop/public")));
 // The below points our server to a series of "route" files.
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
+
 
 app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
