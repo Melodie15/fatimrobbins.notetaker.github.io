@@ -113,8 +113,10 @@ const renderNoteList = (notes) => {
 
   // Returns jquery object for li with given text and delete button
   const create$li = (text, withDeleteButton = true) => {
-    const $li = $("<li class='list-group-item'>").data(note);
-    const $span = $("<span>").text(note.title);
+    const $li = $("<li class='list-group-item'>");
+    $li.data(text);
+    const $span = $("<span>");
+    $span.text(text);
 
     $li.append($span);
  

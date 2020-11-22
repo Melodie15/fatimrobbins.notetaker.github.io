@@ -1,7 +1,7 @@
 const fs = require("fs");
 const util = require("util");
 const writeFileSync = util.promisify(fs.writeFile);
-var noteContents = require("../db/noteContents");
+var noteContents = require("../db/db.json");
 
 module.exports = function(app) {
 
@@ -11,13 +11,15 @@ module.exports = function(app) {
 
     app.post("/api/notes", function(req, res) {
 
-        let newNote = req.body;
-        let uniqueId = (noteContents.lenght).toString();
+        let newNote = req.body;     
+        
+        let uniqueId = (noteContents.length).toString();
+        
         console.log(uniqueId);
         newNote.id = uniqueId;
         noteContents.push(newNote);
 
-        writeFileSync("./db/noteContents.json", JSON.stringify(noteContents), function(err) {
+        writeFileSync("./db/db.json", JSON.stringify(noteContents), function(err) {
             if (err) throw (err);
         });
         res.json(newNote);
@@ -26,15 +28,22 @@ module.exports = function(app) {
     app.delete("/api/notes/:id", function(req, res){
         let noteId = req.params.id;
         let newId = 0;
-        console.log('Deleting note with id ${noteId}');
-        noteContents = noteContents.filter(currentNote => {
-            return currentNote.id != noteId;
-        });
-        for (currentNote of data) {
-            currentNote.id = newId.toString();
-            newId++
+        console.log(`Deleting note with id ${noteId}`);
+        const uId=noteContents.findIndex(x=>x.id==noteId);
+        if(uId>-1){
+            noteContents.splice(uId,1);
         }
-        fs.writeFileSync("./db/noteContents.json", JSON.stringify(noteContents));
+        // noteContents = noteContents.filter(currentNote => {
+        //     return currentNote.id != noteId;
+        // });
+        // for (currentNote of data) {
+        //     currentNote.id = newId.toString();
+        //     newId++
+        // }
+       
+        writeFileSync("./db/db.json", JSON.stringify(noteContents), function(err) {
+            if (err) throw (err);
+        });
         res.json(noteContents);
     });
 }
